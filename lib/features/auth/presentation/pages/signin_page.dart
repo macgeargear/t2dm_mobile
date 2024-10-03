@@ -49,7 +49,7 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Sign In',
+                    'Wannoi',
                     style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 30),
