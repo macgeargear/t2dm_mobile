@@ -11,7 +11,7 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: AppColor.purple),
+          borderRadius: BorderRadius.circular(12), color: AppColor.purple01),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

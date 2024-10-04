@@ -11,7 +11,8 @@ class AppColor {
   static const Color error = Colors.redAccent;
   static const Color transparent = Colors.transparent;
 
-  static const Color purple = Color(0xFF86469C);
+  static const Color purple01 = Color(0xFF86469C);
+  static const Color purple02 = Color(0xFFBC7FCD);
 
   static const Color primary = Color(0xFFFCA4C4);
   static const Color secondary = Color(0xFFFCC7DC);

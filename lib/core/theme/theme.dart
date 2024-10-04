@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:t2dm_mobile/core/theme/app_color.dart';
 
 class AppTheme {
@@ -13,5 +14,6 @@ class AppTheme {
       focusedBorder: _border(AppColor.secondary),
     ),
     appBarTheme: const AppBarTheme(backgroundColor: AppColor.background),
+    textTheme: GoogleFonts.inriaSansTextTheme(),
   );
 }

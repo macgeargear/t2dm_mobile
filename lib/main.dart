@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t2dm_mobile/core/theme/theme.dart';
 import 'package:t2dm_mobile/features/auth/presentation/auth/auth_bloc.dart';
-import 'package:t2dm_mobile/features/auth/presentation/pages/signup_page.dart';
+import 'package:t2dm_mobile/features/auth/presentation/pages/start_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'T2DM',
       theme: AppTheme.lightMode,
-      home: const SignUpPage(), // add bloc selector
+      home: const StartPage(), // add bloc selector
     );
   }
 }
@@ -45,11 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
