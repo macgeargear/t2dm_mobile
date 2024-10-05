@@ -11,20 +11,15 @@ class UserModel extends User {
       required super.birthDate});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    // print("id: ${json["user"]["_id"]}");
-    // print("firstName: ${json["user"]["firstName"]}");
-    // print("lastName: ${json["user"]["lastName"]}");
-    // print("gender: ${json["user"]["gender"]}");
-    // print("birthdate: ${json["user"]["birthdate"]}");
-    // print("status: ${json["user"]["status"]}");
+    final data = json.containsKey("user") ? json["user"] : json["data"];
     return UserModel(
-      id: json["user"]["_id"],
-      firstname: json["user"]["firstName"],
-      lastname: json["user"]["lastName"],
-      gender: json["user"]["gender"],
-      birthDate: json["user"]["birthdate"],
+      id: data["_id"],
+      firstname: data["firstName"],
+      lastname: data["lastName"],
+      gender: data["gender"],
+      birthDate: data["birthdate"],
       profilePicture: "",
-      status: json["user"]["status"],
+      status: data["status"],
     );
   }
 

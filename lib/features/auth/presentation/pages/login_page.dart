@@ -38,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
-            print(state.message);
             showSnackBar(context, state.message);
           }
         },

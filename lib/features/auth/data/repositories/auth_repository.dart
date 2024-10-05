@@ -22,7 +22,15 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Error, User>> currentUser() {
-    throw UnimplementedError();
+  Future<Either<Error, User>> currentUser() async {
+    try {
+      final user = await authDatasources.getCurrentUserData();
+      if (user == null) {
+        return left(Error("User not logged in"));
+      }
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Error(e.message));
+    }
   }
 }

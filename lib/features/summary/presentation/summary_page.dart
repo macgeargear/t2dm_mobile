@@ -3,15 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t2dm_mobile/features/auth/domain/entities/user.dart';
 import 'package:t2dm_mobile/features/auth/presentation/bloc/auth_bloc.dart';
 
-class ClinicalInfoPage extends StatelessWidget {
-  const ClinicalInfoPage({super.key});
+class SummaryPage extends StatelessWidget {
+  const SummaryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Clinical Data 🫁'),
-        ),
+        appBar: AppBar(),
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
@@ -25,19 +23,22 @@ class ClinicalInfoPage extends StatelessWidget {
               // Get the user information from the AuthSuccess state
               User user = state.user;
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text('Firstname: '),
-                      Text(user.firstname),
-                      const Text('Lastname: '),
-                      Text(user.lastname),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                ],
+              return Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Welcome, ${user.firstname} ${user.lastname} 👋🏻',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               );
             } else if (state is AuthLoading) {
               return const Center(child: CircularProgressIndicator());

@@ -25,7 +25,11 @@ class AuthDatasourcesImpl implements AuthDatasources {
           'password': password,
         },
       );
-      print(response.data);
+      if (response.statusCode == 401) {
+        throw const ServerException("Invalid username or password");
+      } else if (response.statusCode != 200) {
+        throw ServerException(response.data.toString());
+      }
       if (response.statusCode != 200) {
         throw ServerException(response.data.toString());
       }
@@ -46,19 +50,18 @@ class AuthDatasourcesImpl implements AuthDatasources {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("accessToken");
 
-    if (token == null) {
-      return null;
-    }
-
     dio.options.headers["Authorization"] = "Bearer $token";
 
     Response response =
         await dio.get('${APIConfig.baseUrl}/auth/getPatientInfo');
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      throw const ServerException("Unauthorized: Invalid or expired token");
+    } else if (response.statusCode != 200) {
       throw ServerException(response.data.toString());
     }
 
     return UserModel.fromJson(response.data);
+    // throw UnimplementedError();
   }
 }
