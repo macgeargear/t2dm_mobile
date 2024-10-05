@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:t2dm_mobile/core/common/cubits/cubit/app_user_cubit.dart';
 import 'package:t2dm_mobile/core/theme/theme.dart';
-import 'package:t2dm_mobile/features/auth/presentation/auth/auth_bloc.dart';
-import 'package:t2dm_mobile/features/auth/presentation/pages/start_page.dart';
+import 'package:t2dm_mobile/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:t2dm_mobile/features/auth/presentation/pages/login_page.dart';
+import 'package:t2dm_mobile/features/clinical_info/presentation/clinical_info_page.dart';
+import 'package:t2dm_mobile/init_dependencies.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => AuthBloc())],
-      child: const MyApp()));
+  await initDependencies();
+
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+    BlocProvider(create: (_) => serviceLocator<AppUserCubit>())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -26,7 +32,14 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'T2DM',
       theme: AppTheme.lightMode,
-      home: const StartPage(), // add bloc selector
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(selector: (state) {
+        return state is AppUserLoggedIn;
+      }, builder: (context, state) {
+        if (state) {
+          return const ClinicalInfoPage();
+        }
+        return const LoginPage();
+      }), // add bloc selector
     );
   }
 }

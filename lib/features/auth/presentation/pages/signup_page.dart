@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t2dm_mobile/core/theme/app_color.dart';
 import 'package:t2dm_mobile/core/utils/show_snackbar.dart';
-import 'package:t2dm_mobile/features/auth/presentation/auth/auth_bloc.dart';
-import 'package:t2dm_mobile/features/auth/presentation/pages/signin_page.dart';
+import 'package:t2dm_mobile/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:t2dm_mobile/features/auth/presentation/pages/login_page.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_button.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_field.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_header.dart';
@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthFailure) {
+          if (state is AuthError) {
             showSnackBar(context, state.message);
           }
         },
@@ -74,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, SignInPage.route());
+                            Navigator.push(context, LoginPage.route());
                           },
                           child: RichText(
                               text: TextSpan(

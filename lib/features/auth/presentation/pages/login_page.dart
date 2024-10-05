@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:t2dm_mobile/core/common/widgets/loader.dart';
 import 'package:t2dm_mobile/core/theme/app_color.dart';
 import 'package:t2dm_mobile/core/utils/show_snackbar.dart';
-import 'package:t2dm_mobile/features/auth/presentation/auth/auth_bloc.dart';
+import 'package:t2dm_mobile/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_button.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_field.dart';
 import 'package:t2dm_mobile/features/auth/presentation/widgets/auth_header.dart';
 
-class SignInPage extends StatefulWidget {
-  static route() => MaterialPageRoute(builder: (context) => const SignInPage());
+class LoginPage extends StatefulWidget {
+  static route() => MaterialPageRoute(builder: (context) => const LoginPage());
 
-  const SignInPage({super.key});
+  const LoginPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -36,14 +37,15 @@ class _SignInPageState extends State<SignInPage> {
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthFailure) {
+          if (state is AuthError) {
+            print(state.message);
             showSnackBar(context, state.message);
           }
         },
         builder: (context, state) {
-          // if (state is AuthLoading) {
-          //   return const Loader();
-          // }
+          if (state is AuthLoading) {
+            return const Loader();
+          }
           return Padding(
             padding: const EdgeInsets.all(24),
             child: Form(
@@ -66,14 +68,19 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(height: 20),
                         AuthButton(
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {}
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(AuthLogin(
+                                    username: usernameController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  ));
+                            }
                           },
                           buttonText: 'Sign In',
                         ),
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, SignInPage.route());
+                            Navigator.push(context, LoginPage.route());
                           },
                           child: RichText(
                               text: TextSpan(
